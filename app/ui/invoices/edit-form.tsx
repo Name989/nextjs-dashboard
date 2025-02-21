@@ -11,20 +11,30 @@ import Link from 'next/link';
 import { Button } from '@/app/ui/button';
 import { updateInvoice, State } from '@/app/lib/actions';
 import { useActionState } from 'react';
+
 export default function EditInvoiceForm({
   invoice,
   customers,
 }: {
   invoice: InvoiceForm;
   customers: CustomerField[];
-  }) {
-  
+}) {
   const initialState: State = { message: null, errors: {} };
   const updateInvoiceWithId = updateInvoice.bind(null, invoice.id);
   const [state, formAction] = useActionState(updateInvoiceWithId, initialState);
 
   return (
     <form action={formAction}>
+      {state.message && (
+        <div className="mb-4 text-green-600">{state.message}</div>
+      )}
+      {state.errors && Object.keys(state.errors).length > 0 && (
+        <div className="mb-4 text-red-600">
+          {Object.values(state.errors).map((error, index) => (
+            <div key={index}>{error}</div>
+          ))}
+        </div>
+      )}
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
         {/* Customer Name */}
         <div className="mb-4">
