@@ -3,10 +3,12 @@ import Breadcrumbs from '@/app/ui/invoices/breadcrumbs';
 import { fetchInvoiceById, fetchCustomers } from '@/app/lib/data';
 import { notFound } from 'next/navigation';
 
+interface Params {
+    id: string;
+}
+
 interface PageProps {
-    params: {
-        id: string;
-    };
+    params: Params;
 }
 
 export default async function Page({ params }: PageProps) {
